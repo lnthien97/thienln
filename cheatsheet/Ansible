@@ -1,0 +1,41 @@
+--- on controller node ---
+# installation ansible on ubuntu
+apt-add-repository ppa:ansible/ansible
+apt update 
+apt install ansible
+
+---- on remote host (HOST01) ---
+# on remote host (HOST01)
+# adduser thienln 
+cd /home/thienln/
+mkdir .ssh
+cat <<EOF >>.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyv... thienln@controller
+EOF
+chmod 600 .ssh/authorized_keys
+chown -R thienln:thienln .ssh/
+
+cat <<EOF >> /etc/ssh/sshd_config
+Port 22
+ListenAddress 0.0.0.0
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+ClientAliveInterval 10
+ClientAliveCountMax 3
+Subsystem sftp /usr/lib/openssh/sftp-server
+UseDNS no
+UsePAM yes
+
+AllowUsers thienln
+EOF 
+
+systemctl restart sshd
+
+--- back to controller node ---
+# hold private key in memory, you don't need to enter passphrase every time  
+eval `ssh-agent` && ssh-add /home/thienln/.ssh/id_rsa
+
+# run a playbook
+ansible-playbook -i inventories.ini -u thienln -K --key-file /home/thienln/.ssh/id_rsa playbook.yaml  --limit HOST01
+

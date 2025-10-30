@@ -1,0 +1,28 @@
+- A Systems Engineer who knows Linux from kernel to wire – from filesystem internals and block schedulers to high-speed network file systems like NVMe-oF, iSCSI, and Ceph
+- Design, compile, and tune custom Linux kernels for HPC, I/O, and network performance.
+- Optimize storage stack: block layer, I/O schedulers, NVMe, and network-backed filesystems.
+- Configure and maintain distributed storage systems: Ceph, ZFS, GlusterFS, iSCSI, NVMe-over-Fabrics.
+- Debug low-level performance issues (IOPS, latency, interrupts, page cache, NUMA).
+- Build automated benchmarking and stress-testing for throughput and reliability – build at petabyte scale
+- Implement fault tolerance, replication, and disaster recovery strategies.
+- Collaborate with GPU and data science teams to maximize data pipeline efficiency.
+- Contribute to observability and tracing using perf, eBPF, ftrace, tcpdump, iostat, blktrace.
+- Drive the development and execution of disaster recovery and business continuity plans.
+- Monitor and tune platforms to ensure expected availability and performance levels are achieved.
+- Maintain software and systems roadmaps that balance maintenance and routine upgrades, new features, system architecture considerations, and regulatory requirements.
+- Formulate packages for software distribution and patching.
+- Ensure that all infrastructure follows security best practices and aligns with company policies and industry standards. 
+- Serve on an on-call schedule to address urgent issues requiring support outside of normal working hours.
+
+
+- 7+ years in Linux systems programming, kernel tuning, or HPC ops.
+- Deep understanding of filesystems, storage protocols (iSCSI, NVMe-oF, NFS, SMB), and network stack tuning.
+- Experience with kernel builds, driver debugging, or BPF-based profiling.
+- Proficiency in Bash, Python, Go, or C for automation and tooling.
+- Familiar with containers and orchestration (Docker, Kubernetes).
+- Knowledge of RDMA, InfiniBand, or 100 GbE+ networking
+- Fluent in English, detail-oriented, and comfortable working independently as well as in a team.
+
+
+- Contributions to the Linux kernel or open-source storage/network projects.
+- Experience with Ceph or Lustre in production HPC or AI environments.
