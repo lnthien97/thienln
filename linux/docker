@@ -1,0 +1,33 @@
+# linux 
+- kernel : cpu, ram, network driver,..
+- userspace : /bin, bash,  ls, cat, cp, apt, ... 
+
+# docker 
+- same kernel with host
+- different userspace 
+
+# a docker image 
+build on userspace
+
+# example Dockerfile
+cat <<EOF> Dockerfile
+FROM alpine:3.20
+CMD ["echo", "Hello from my first Docker image!"]
+EOF
+
+docker build -t my-hello .
+
+docker run --rm my-hello
+
+
+-----
+# docker network 
+- brigde network (default): 172.17.0.x , private in host, container in this network can connect to each other, can not connect to other host
+- host network : container uses the same host ip, if container run app on port 80, this is actually host port
+- overlay network : a network across multiple physical host, container in host A can connect to container in host B
+- None network: 127.0.0.1 . security batch job, data processing scripts, secret rotation
+
+
+
+----
+
