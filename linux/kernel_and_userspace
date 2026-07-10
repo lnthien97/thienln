@@ -1,0 +1,18 @@
+# the kernel 
+    - Process scheduler — decides which process runs on which CPU and when.
+    - Memory management — allocates RAM, handles virtual memory and paging.
+    - Filesystem drivers — ext4, XFS, Btrfs; the code that reads/writes disk.
+    - Network stack — TCP/IP, routing, iptables/netfilter (the same netfilter your iptables-k8s-node.sh script configures).
+    - Device drivers — talk to hardware: disks, network cards, GPUs.
+    - System call interface — the entry point userspace uses to ask the kernel for things (read, write, open, fork).
+    - Namespaces & cgroups — the isolation and resource-limiting features that make containers possible.
+
+# the userspace 
+    - Shell — bash, sh, zsh.
+    - Core utilities — ls, cp, cat, grep, ps (e.g. GNU coreutils, or BusyBox in Alpine).
+    - System libraries — glibc or musl, OpenSSL; the shared libraries apps link against.
+    - Package managers — apt, apk, yum.
+    - Runtimes & interpreters — Python, Node.js, the JVM, the Go runtime built into your demo-app binary.
+    - Your application — the actual service you wrote.
+    - Daemons/services — nginx, PostgreSQL, sshd.
+

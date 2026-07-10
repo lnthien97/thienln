@@ -1,0 +1,57 @@
+gitlab runner 10.10.136.5 
+git repo : https://git.vngcloud.tech/block-storage/ceph-build
+
+2026-05-20
+    vcr.vngcloud.vn/106702-vstorage/ceph-vng/ceph:v18.2.7
+    digest: sha256:de620453e5d59eced64fb50cf6264a028c796f8984fb8de9823c41cc422079f0
+    updates: opa + FIX_ERR_PRESIGNED_URL_EXPIRED
+
+## Docker private hub
+https://vcr.vngcloud.vn
+106702-vstorage / GCnEmJqdtvuhJ8F3bpzARaXFYs6WPAvY
+
+# in gitlab runner 
+
+# build image with new source code /home/thienln/ceph18.2.7
+podman run -dit --name=ceph-test-build-18.2.7_01 \
+  --user=0   --volume=/home/thienln/ceph18.2.7:/ceph:Z  \
+  -e LD_LIBRARY_PATH=/ceph/build.centos9/lib   \
+  -e HOMEDIR=/ceph   \
+  -e BUILD_DIR=build.centos9 vcr.vngcloud.vn/106702-vstorage/ceph-vng/ceph-build:v18.2.7   bash
+
+# exec to container
+podman exec -it ceph-test-build-18.2.7_01 bash
+
+# in container
+export http_proxy=http://10.13.92.251:3128
+export https_proxy=http://10.13.92.251:3128
+cd /ceph
+rm -rf build.centos9
+source ./src/script/run-make.sh && has_build_dir || configure
+cd build.centos9
+ninja
+
+-----
+/usr/bin
+/usr/lib64
+/usr/lib64/ceph
+
+--------------------- in gitlab runner -----
+# build image with new source code 
+podman run -dit --name=<container_name_gitlab_tag> \
+  --user=0   --volume=<gitlab_source_code_folder_path>/ceph:Z  \
+  -e LD_LIBRARY_PATH=/ceph/build.centos9/lib   \
+  -e HOMEDIR=/ceph   \
+  -e BUILD_DIR=build.centos9 vcr.vngcloud.vn/106702-vstorage/ceph-vng/ceph-build:v18.2.7   bash
+
+# exec to container
+podman exec -it <container_name_gitlab_tag> bash
+
+# in container
+export http_proxy=http://10.13.92.251:3128
+export https_proxy=http://10.13.92.251:3128
+cd /ceph
+rm -rf build.centos9
+source ./src/script/run-make.sh && has_build_dir || configure
+cd build.centos9
+ninja

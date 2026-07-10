@@ -1,0 +1,56 @@
+# download and verify a deb package WITHOUT PGP 
+- download signature/hashed from official website (A)
+- download abc.deb package
+- sha256 abc.deb (B)
+- compare A and B : if matched then it good 
+
+# install with pgp (apt,)
+- apt install abc.deb 
+
+
+# how pgp work
+- download .pgb, .asc file from official website : /etc/apt/keyrings/docker.asc, /etc/apt/keyring/kubernetes-apt-keyring.gpg
+- apt install docker : download package list + signature
+- compare key and signature
+
+
+ ┌────────────────────────┐                  ┌────────────────────────┐
+ │   Your Ubuntu Machine  │                  │  Official Docker Repo  │
+ └───────────┬────────────┘                  └───────────┬────────────┘
+             │                                           │
+             │  1. curl (Download PGP Public Key)       │
+             ├──────────────────────────────────────────>│
+             │                                           │
+             │  2. Sends "docker.asc"                    │
+             │<──────────────────────────────────────────┤
+             │                                           │
+ ┌───────────┴────────────┐                              │
+ │ SAVES KEY TO:          │                              │
+ │ /etc/apt/keyrings/     │                              │
+ └───────────┬────────────┘                              │
+             │                                           │
+             │  3. apt update (Request Package Index)    │
+             ├──────────────────────────────────────────>│
+             │                                           │
+             │  4. Sends Packages list + Signatures      │
+             │<──────────────────────────────────────────┤
+             │                                           │
+ ┌───────────┴────────────┐                              │
+ │ VERIFICATION PROCESS   │                              │
+ │                        │                              │
+ │ [Downloaded Package]   │                              │
+ │       │                │                              │
+ │   Runs Hash            │                              │
+ │       │                │                              │
+ │       ▼                │                              │
+ │  Local Fingerprint     │                              │
+ │       │                │                              │
+ │       ▼                │                              │
+ │   DO THEY MATCH?  ◄────┼─── Decrypts Signature        │
+ │       │                │    Using "docker.asc"        │
+ │       ▼                │                              │
+ └───────┬────────────────┘                              │
+         │                                               │
+         ├─► [ YES ] ──► Installs Docker Safely!         │
+         │                                               │
+         └─► [ NO  ] ──► BLOCKS INSTALLATION (Error)     │
